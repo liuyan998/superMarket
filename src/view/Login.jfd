@@ -4,13 +4,14 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {comp titleLabel::l:::x, seq l {space :p:36:p, par t:::p {comp pwdLabel::::38:x, comp userLabel::::38:x, comp label4::t::38:x}, space u:p::p, par l {par t:l::p {comp pwdField::::209:x, comp userField::::209:x, comp comboBox1::::209:x}, comp remenberMe::l:p::p}, space :::p, par l {seq {comp userTipLabel:::p::p, space ::12:x, comp panel1:::p::p, space :p:15:p}, seq {comp pwdVisibleBtn:::p:30:p, space :::x}}}, seq t {space ::140:x, comp loginBtn:::p:111:p, space :p:137:p}}"
-			"$verticalGroup": "par l {seq l {space :p:21:p, comp titleLabel:::p:34:p, space :p:27:p, par b {comp label4::b:p::p, comp comboBox1::b:p::p}, space u:p::p, par l {par b:l {comp userLabel::b:p:21:p, comp userField::b:p::p, comp userTipLabel::b:p::p}, comp panel1::l:p:24:p}, space u:p::p, par b {comp pwdLabel::b:::x, comp pwdField::t:::x, seq t {space :0:0:x, comp pwdVisibleBtn:::p::p}}, space :p::p, comp remenberMe:::p::p, space :p::p, comp loginBtn:::p:32:p, space :p:27:p}}"
+			"$horizontalGroup": "par l {seq l {space :p:36:p, par t:::p {comp userLabel::t::38:x, comp pwdLabel::t::38:x, comp label4::t::38:x, comp label1::t:p::p}, space u:::p, par l {seq {par t:::p {comp comboBox1::l:::x, seq t {comp yzmField:::p:111:p, space s:::p, comp yzmLabel:::p:80:p}, comp userField::t:::x, comp pwdField::l:::x}, space :::p, par l {comp pwdVisibleBtn:::p:30:p, comp userTipLabel:::p::p}}, comp remenberMe:::p::p}, space ::22:x, comp panel1:::p::p, space :p:15:p}, comp titleLabel::::398:x, seq l {space :p:137:p, comp loginBtn:::p:111:p, space ::150:x}}"
+			"$verticalGroup": "par l {seq l {space :p:15:p, comp titleLabel:::p:34:p, space u:::p, par b {comp comboBox1::b:p::p, comp label4::b:p::p}, space u:::p, par b {comp userTipLabel::b:p::p, comp userLabel::b:p:21:p, comp userField::b:p:30:p}, par l {seq l {space :p:24:p, comp panel1:::p:24:p}, seq l {space :p:12:p, comp pwdVisibleBtn:::p::p}, seq l {space u:::p, par b {comp pwdLabel::b:p::p, comp pwdField::b:p::p}, space u:::p, par l {par b {comp yzmField::b:p::p, comp label1::b:p::p}, comp yzmLabel:::p::p}}}, space u:::p, comp remenberMe:::p::p, space :::p, comp loginBtn:::p:32:p, space ::20:x}}"
 		} ) {
 			name: "frame"
 			"alwaysOnTop": true
 			"title": "超市收银系统"
 			"$locationPolicy": 1
+			"$sizePolicy": 1
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "userLabel"
 				"text": "账号"
@@ -71,10 +72,23 @@ new FormModel {
 				"icon": new com.jformdesigner.model.SwingIcon( 1, "C:\\Users\\Administrator\\Desktop\\Workspace\\superMarket\\images\\eye.png" )
 				"iconTextGap": 0
 				"horizontalTextPosition": 0
+				"cursor": &Cursor0 new java.awt.Cursor( 12 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "验证码"
+			} )
+			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+				name: "yzmField"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "yzmLabel"
+				"preferredSize": new java.awt.Dimension( 80, 30 )
+				"cursor": #Cursor0
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 70, 70 )
-			"size": new java.awt.Dimension( 390, 300 )
+			"location": new java.awt.Point( 10, 0 )
+			"size": new java.awt.Dimension( 400, 335 )
 		} )
 	}
 }

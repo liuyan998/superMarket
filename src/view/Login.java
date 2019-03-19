@@ -6,11 +6,16 @@ package view;
 
 import service.AccountService;
 import service.AccountServiceImpl;
+import utils.AES_Utils;
+import utils.CodePicture;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.GroupLayout;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.Iterator;
+import java.util.Properties;
 
 /**
  * @author 吴英峰
@@ -56,6 +61,9 @@ public class Login {
         comboBox1 = new JComboBox<>();
         label4 = new JLabel();
         pwdVisibleBtn = new JButton();
+        label1 = new JLabel();
+        yzmField = new JFormattedTextField();
+        yzmLabel = new JLabel();
 
         //======== frame ========
         {
@@ -117,70 +125,90 @@ public class Login {
             pwdVisibleBtn.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\Workspace\\superMarket\\images\\eye.png"));
             pwdVisibleBtn.setIconTextGap(0);
             pwdVisibleBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+            pwdVisibleBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+            //---- label1 ----
+            label1.setText("\u9a8c\u8bc1\u7801");
+
+            //---- yzmLabel ----
+            yzmLabel.setPreferredSize(new Dimension(80, 30));
+            yzmLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
             GroupLayout frameContentPaneLayout = new GroupLayout(frameContentPane);
             frameContentPane.setLayout(frameContentPaneLayout);
             frameContentPaneLayout.setHorizontalGroup(
                 frameContentPaneLayout.createParallelGroup()
-                    .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(frameContentPaneLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(frameContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(pwdLabel, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                             .addComponent(userLabel, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                            .addComponent(label4, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                                .addComponent(pwdLabel, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                                .addComponent(label4, GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                                .addComponent(label1))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(frameContentPaneLayout.createParallelGroup()
-                            .addGroup(frameContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(pwdField, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                .addComponent(userField, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                .addComponent(comboBox1, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
-                            .addComponent(remenberMe))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(frameContentPaneLayout.createParallelGroup()
-                            .addGroup(frameContentPaneLayout.createSequentialGroup()
-                                .addComponent(userTipLabel)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                                .addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(15, 15, 15))
-                            .addGroup(frameContentPaneLayout.createSequentialGroup()
-                                .addComponent(pwdVisibleBtn, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(GroupLayout.Alignment.TRAILING, frameContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(140, Short.MAX_VALUE)
+                                .addGroup(frameContentPaneLayout.createSequentialGroup()
+                                        .addGroup(frameContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(comboBox1, GroupLayout.Alignment.LEADING)
+                                                .addGroup(frameContentPaneLayout.createSequentialGroup()
+                                                        .addComponent(yzmField, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(yzmLabel, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(userField)
+                                                .addComponent(pwdField, GroupLayout.Alignment.LEADING))
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(frameContentPaneLayout.createParallelGroup()
+                                                .addComponent(pwdVisibleBtn, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(userTipLabel)))
+                                .addComponent(remenberMe))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                            .addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addGap(15, 15, 15))
+                        .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                        .addGroup(frameContentPaneLayout.createSequentialGroup()
+                                .addGap(137, 137, 137)
                         .addComponent(loginBtn, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-                        .addGap(137, 137, 137))
+                                .addContainerGap(150, Short.MAX_VALUE))
             );
             frameContentPaneLayout.setVerticalGroup(
                 frameContentPaneLayout.createParallelGroup()
                     .addGroup(frameContentPaneLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                            .addGap(15, 15, 15)
                         .addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(frameContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label4)
-                            .addComponent(comboBox1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboBox1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label4))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(frameContentPaneLayout.createParallelGroup()
                             .addGroup(frameContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(userLabel, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(userField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(userTipLabel))
-                            .addComponent(panel1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(frameContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(pwdLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pwdField)
-                            .addGroup(frameContentPaneLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(pwdVisibleBtn, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(userTipLabel)
+                                    .addComponent(userLabel, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(userField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(frameContentPaneLayout.createParallelGroup()
+                                    .addGroup(frameContentPaneLayout.createSequentialGroup()
+                                            .addGap(24, 24, 24)
+                                            .addComponent(panel1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(frameContentPaneLayout.createSequentialGroup()
+                                            .addGap(12, 12, 12)
+                                            .addComponent(pwdVisibleBtn, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(frameContentPaneLayout.createSequentialGroup()
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(frameContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(pwdLabel)
+                                                    .addComponent(pwdField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(frameContentPaneLayout.createParallelGroup()
+                                                    .addGroup(frameContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                            .addComponent(yzmField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(label1))
+                                                    .addComponent(yzmLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(remenberMe)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(loginBtn, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))
+                            .addContainerGap(20, Short.MAX_VALUE))
             );
-            frame.pack();
+            frame.setSize(400, 335);
             frame.setLocationRelativeTo(null);
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -189,6 +217,29 @@ public class Login {
     private void initByMyself() {
         userTipLabel.setVisible(false);
         pwdField.setEchoChar('•');
+        Object[] imageArr = CodePicture.createImage();
+        ImageIcon img = new ImageIcon((BufferedImage) imageArr[1]);//创建图片对象
+        yzm = imageArr[0].toString().toLowerCase();
+        System.out.println(yzm);
+        yzmLabel.setIcon((Icon) img);
+        Properties prop = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream("cookies.properties"));
+            prop.load(in);     ///加载属性列表
+            Iterator<String> it = prop.stringPropertyNames().iterator();
+            if (it.hasNext()) {
+                String key = it.next();
+                String pwd = AES_Utils.decode(prop.getProperty(key),
+                        AES_Utils.getKey());
+                System.out.println(key + ":" + pwd);
+                userField.setText(key);
+                pwdField.setText(pwd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
         userField.addFocusListener(new FocusAdapter() {
             @Override
@@ -267,17 +318,64 @@ public class Login {
         loginBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (userField.getText().equals("") || pwdField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(frame, "账号或密码不能为空");
+                    e.consume();
+                    return;
+                }
+                if (yzmField.getText().toLowerCase().equals("")) {
+                    JOptionPane.showMessageDialog(frame, "验证码不能为空");
+                    e.consume();
+                    return;
+                }
+                if (!yzmField.getText().toLowerCase().equals(yzm)) {
+                    JOptionPane.showMessageDialog(frame, "验证码错误");
+                    yzm = CodePicture.getPicture(yzmLabel).toLowerCase();
+                    yzmField.setText("");
+                    e.consume();
+                    return;
+                }
                 if(userTipLabel.isVisible()){
                     JOptionPane.showMessageDialog(frame, "账号不存在，请检查账号");
                 }else{
                     AccountServiceImpl accountService = new AccountServiceImpl();
-                    boolean accessible = accountService.isAccessible(userField.getText(), pwdField.getText());
+                    boolean accessible = accountService.isAccessible(userField.getText(),
+                            pwdField.getText(),
+                            (String) comboBox1.getSelectedItem());
                     if(!accessible){
                         JOptionPane.showMessageDialog(frame, "登录失败，请检查账号密码");
+                        e.consume();
+                        return;
+                    }
+                    if (remenberMe.isSelected()) {
+                        try {
+                            Properties pro = new Properties();
+                            FileOutputStream fo = new FileOutputStream("cookies.properties", true);
+                            pro.setProperty(userField.getText(),
+                                    AES_Utils.encode(pwdField.getText(), AES_Utils.getKey()));
+                            pro.store(fo, null);    //comment 是注释
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            FileOutputStream fo = new FileOutputStream("cookies.properties");
+                        } catch (FileNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 }
             }
         });
+        yzmLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    //重新获取验证码
+                    yzm = CodePicture.getPicture(yzmLabel).toLowerCase();
+                }
+            }
+        });
+
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -295,6 +393,10 @@ public class Login {
     private JComboBox<String> comboBox1;
     private JLabel label4;
     private JButton pwdVisibleBtn;
+    private JLabel label1;
+    private JFormattedTextField yzmField;
+    private JLabel yzmLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private boolean isNumberChanged=false;
+    private String yzm = null;
 }

@@ -1,16 +1,13 @@
 package service;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
 import dao.AccountDao;
 import dao.AccountDaoImpl;
 import domain.Account;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import utils.HibernateUtils;
+
+import java.sql.SQLException;
 
 public class AccountServiceImpl implements AccountService {
 
@@ -74,14 +71,14 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public boolean isAccessible(String number, String pwd) {
+	public boolean isAccessible(String number, String pwd, String type) {
 		Transaction tran=null;
 		try {
 			Session currentSession = HibernateUtils.getCurrentSession();
 			tran = currentSession.beginTransaction();
 			AccountDaoImpl accountDao = new AccountDaoImpl();
 			Account account = (accountDao.getByNumber(number));
-			if(account.getPwd().equals(pwd)){
+			if (account.getPwd().equals(pwd) && account.getType().equals(type)) {
 				return true;
 			}
 			tran.commit();

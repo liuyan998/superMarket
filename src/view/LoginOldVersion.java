@@ -20,7 +20,7 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
-public class LoginOld {
+public class LoginOldVersion {
 
 	private JFrame frame;
 	private JTextField userField;
@@ -34,7 +34,7 @@ public class LoginOld {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginOld window = new LoginOld();
+                    LoginOldVersion window = new LoginOldVersion();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +47,7 @@ public class LoginOld {
 	 * Create the application.
 	 */
 
-	public LoginOld() {
+    public LoginOldVersion() {
 		try {
 			Class.forName("utils.HibernateUtils");
 		} catch (ClassNotFoundException e) {

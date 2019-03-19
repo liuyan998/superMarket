@@ -14,7 +14,7 @@ public interface AccountService {
 
 	boolean isExist(String number);
 
-	boolean isAccessible(String number, String pwd);
+	boolean isAccessible(String number, String pwd, String type);
 	
 	void updatePassword(String number, String pwd);
 
