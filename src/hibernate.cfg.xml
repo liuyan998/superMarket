@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM "hibernate-configuration-3.0.dtd" >
+<hibernate-configuration>
+	<session-factory>
+
+		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+
+		<property name="hibernate.connection.url">jdbc:sqlserver://127.0.0.1:1433;databaseName=super_market</property>
+
+		<property name="hibernate.connection.username">sa</property>
+
+		<property name="hibernate.connection.password">123qwe</property>
+
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+				<property name="hibernate.c3p0.max_size">20</property>
+        		<property name="hibernate.c3p0.min_size">5</property>
+        		<property name="hibernate.c3p0.timeout">120</property>
+      			<property name="automaticTestTable">Test</property>
+      			<property name="hibernate.c3p0.max_statements">100</property>
+		        <property name="hibernate.c3p0.idle_test_period">120</property>
+		        <property name="hibernate.c3p0.acquire_increment">1</property>
+		        <property name="c3p0.testConnectionOnCheckout">true</property>
+		        <property name="c3p0.idleConnectionTestPeriod">18000</property>
+		        <property name="c3p0.maxIdleTime">25000</property>
+		        
+		<property name="hibernate.show_sql">true</property>
+
+		<property name="hibernate.format_sql">true</property>
+
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		
+		<!-- 配置和当前线程绑定的session进行开启配置 -->
+		<property name="hibernate.current_session_context_class">thread</property>
+		
+		<mapping class="domain.Account"/>
+	</session-factory>
+</hibernate-configuration>
